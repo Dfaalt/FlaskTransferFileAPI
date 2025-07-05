@@ -11,7 +11,7 @@ def welcome():
     return jsonify({"message": "Welcome to the Gesture Transfer API!"}), 200
 
 # mengirim/post data atau hasil ss ke database
-@app.route("/api/image", methods=["POST"])
+@app.route("/api/image/upload", methods=["POST"])
 def upload_image():
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
@@ -27,7 +27,7 @@ def upload_image():
     return jsonify({"status": "Image uploaded", "filename": filename}), 201
 
 # mendapatkan data atau ss terakhir
-@app.route("/api/image/last", methods=["GET"])
+@app.route("/api/image/latest", methods=["GET"])
 def latest_image():
     result = get_latest_image_blob()
     if result:
@@ -41,7 +41,7 @@ def all_images():
     return jsonify(get_all_images_blob()), 200
 
 # menghapus data atau ss berdasarkan id
-@app.route("/api/image/<int:id>", methods=["DELETE"])
+@app.route("/api/image/delete/<int:id>", methods=["DELETE"])
 def remove_image(id):
     deleted_count = delete_image_blob(id)
     if deleted_count == 0:
@@ -50,7 +50,7 @@ def remove_image(id):
 
 
 # menghapus semua data atau ss
-@app.route("/api/image/deleteAll", methods=["DELETE"])
+@app.route("/api/image/clear", methods=["DELETE"])
 def remove_all_images():
     deleted_count = delete_image_blob(all_data=True)
 
